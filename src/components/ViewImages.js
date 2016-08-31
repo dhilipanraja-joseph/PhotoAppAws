@@ -1,6 +1,8 @@
 import React , { Component } from 'react'
+import { browserHistory } from 'react-router'
 import ImageStore from '../stores/ImageStore'
 import UploadActions from '../actions/UploadActions'
+import ImgPopActions from '../actions/ImgPopActions'
 
 export default class ViewImages extends Component {
   constructor(){
@@ -9,6 +11,11 @@ export default class ViewImages extends Component {
         images : ImageStore.getUploadedImgs()
       }
       this._onChange=this._onChange.bind(this);
+  }
+  popImg(url){
+    //console.log("url",url);
+    ImgPopActions.showPopup(url);
+    browserHistory.push('/image');
   }
   deleteImg(id){
     //console.log("key : ",id);
@@ -30,7 +37,7 @@ export default class ViewImages extends Component {
       return (
         <tr key={image.Key}>
             <td>{image.name}</td>
-            <td><img width="250px" src={image.url}/></td>
+            <td><img onClick={this.popImg.bind(null,image.url)} width="250px" src={image.url}/></td>
             <td><button onClick={this.deleteImg.bind(null,image.Key)}>Delete</button></td>
         </tr>
       )
@@ -49,6 +56,7 @@ export default class ViewImages extends Component {
             {ImgTr}
           </tbody>
         </table>
+        {/* <ImgPopup/> */}
       </div>
     )
   }
