@@ -16,7 +16,7 @@ router.get('/',(req,res)=>{
 
 router.post('/',upload.single('img'),(req,res)=>{
 
-  console.log("req.file",req.file);
+  //console.log("req.file",req.file);
   //res.send(req.file);
   Image.upload(req.file,(err,image)=>{
 
@@ -34,7 +34,7 @@ router.post('/',upload.single('img'),(req,res)=>{
 });
 
 router.delete('/:id',(req,res)=>{
-  console.log("id:",req.params.id);
+  //console.log("id:",req.params.id);
   //Image.remove({Key : req.params.id})
   Image.deleteAWS(req.params.id,(err,data)=>{
     res.status(err?400:200).send(err||data);
