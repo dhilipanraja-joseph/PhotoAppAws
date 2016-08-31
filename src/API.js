@@ -8,7 +8,9 @@ const API = {
     let data = new FormData();
     data.append('img',file);
     axios.post('/api/images',data)
-          //.then(res=>res.data)
+          .then(res=>{
+            ServerActions.uploadedImg()
+          })
           .catch(console.error)
   },
   getAllImg(){

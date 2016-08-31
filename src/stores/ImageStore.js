@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events'
 import AppDispatcher from '../AppDispatcher'
 
-let _images = [];
+let _images = [],_status;
 
 class ImageStore extends EventEmitter {
   constructor(){
@@ -10,9 +10,14 @@ class ImageStore extends EventEmitter {
     AppDispatcher.register(action=>{
 
       switch(action.type){
-        case 'RECEIVE_IMGS' : _images = action.imgs;
-                              this.emit('CHANGE');
-                              break;
+
+        case 'RECEIVE_IMGS'   : _images = action.imgs;
+                                this.emit('CHANGE');
+                                break;
+
+        case 'UPLOAD_SUCCESS' : _status = 'Image Uploaded';
+                                this.emit('CHANGE');
+                                break;
       }
 
     });
@@ -29,6 +34,10 @@ class ImageStore extends EventEmitter {
 
   getUploadedImgs(){
     return _images;
+  }
+
+  getStatus(){
+    return _status;
   }
 }
 
